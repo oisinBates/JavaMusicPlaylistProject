@@ -1,0 +1,184 @@
+//Playlist Class
+public class PlayList
+{
+    private Track[] playlist; 
+    private int used;
+
+    public PlayList() {
+        this.playlist = new Track[100]; // Use the default size of 100 if no size is specified when constructing the PlayList
+        this.used = 0;
+    }
+
+    public PlayList(int preferredSize) {
+        this.playlist = new Track[preferredSize]; // Use the value passed as a parameter to size the PlayList
+        this.used = 0;
+    }
+
+    private int usedIndexCount(){//helper method which returns the count of how many of the array's indexes are full
+        int count=0;
+        for(int i = 0;i< playlist.length;i++){//incremental loop, count as long as the array index is not null          
+            if(playlist[i]!= null){
+                count++;
+            }
+        }
+        return count;
+    }
+
+    public void remove(Track t){
+        int count =0;
+        int count2 = usedIndexCount();
+        for(int i=0; i<playlist.length;i++){
+            if((playlist[i] != null) && playlist[i].compareTo(t) != 0){
+                playlist[count] = playlist[i];//adds to array if index does not contain Track t - if Track t is in playlist, no count++
+                count++;
+                count2--;//decremental counter. If counter2 == 0, we know that the Track t was not in the array.
+            }
+        }
+        if(count2 > 0){
+            playlist[count] = null;//if track was removed,my above method leaves a duplicate at playlist[count]. this removes the duplicate.
+            System.out.println("Track removal successful");
+        }
+        else if(count2 == 0){
+            System.out.println("Track removal was not successful");
+        }
+    }
+
+    public void add(Track t){
+        int used = usedIndexCount();
+        if(used < playlist.length) {
+            int count=0;
+            for(int j = 0;j<playlist.length;j++){
+                if(playlist[j] != null){  
+                    if(playlist[j].compareTo(t) != 0){ 
+                        count++;
+                    }
+                }
+            }
+            if(count == used){
+                playlist[used]=t;//if count is the same length as int used, we know that there are no duplicates in the array and can safely add Track t.
+                System.out.println("Track added successfully");
+            }
+
+            else if(count < used){
+                System.out.println("Unable to add track- No duplicates allowed");
+            }
+        }
+        else{
+            System.out.println("Unable to add track - insufficient space in array");
+        }
+    }
+
+    public void showList() {
+        int used = usedIndexCount();
+        if(used>0){
+            for(int i = 0; i < playlist.length; i++) {//prints array where index not null
+                if(playlist[i] != null){
+                    System.out.println(playlist[i]);
+                }
+            }
+        }
+        else{
+            System.out.println("Playlist is empty");
+        }
+    }
+
+    public void playAll(boolean random){ 
+        Track[] pClone = playlist.clone(); //clone array so as not to alter the original playlist
+        int used = usedIndexCount(); 
+        
+        if(used>0){
+            if(random == true){//shuffle array
+                for(int i=0; i<pClone.length;i++){//shuffle array
+                    int rand = (int) (Math.random() * used);
+                    Track temp = pClone[rand];
+                    pClone[rand] = pClone[i];
+                    pClone[i] = temp;
+                }     
+            }
+
+            for(int i = 0; i < pClone.length; i++) {//prints array where index not null
+                if(pClone[i] != null){
+                    System.out.println(pClone[i]);
+                }
+            }
+        }
+        
+        else{
+            System.out.println("Playlist is empty");
+        }
+    }
+
+    public void playTrack(String artist, boolean random){
+        Track[] pClone = playlist.clone(); //clone array so as not to alter the original playlist
+        int used = usedIndexCount(); 
+        int aCount=0;
+        
+        for(int i = 0; i < pClone.length; i++) {
+            if((pClone[i] != null) && pClone[i].getArtist() == (artist)){
+                aCount++;//incremental loop, if aCount==0, we know that no tracks in playlist match String artist.
+            }
+        }
+
+        if(used>0){
+            if(aCount ==0){
+                System.out.println("No tracks match your chosen artist");
+            }
+            else{
+                if(random == true){//shuffles array
+                    for(int i=0; i<pClone.length;i++){
+                        int song = (int) (Math.random() * used);
+                        Track temp = pClone[song];
+                        pClone[song] = pClone[i];
+                        pClone[i] = temp;
+                    }     
+                }
+                for(int i = 0; i < pClone.length; i++) {//print final array, that meets criteria of specified boolean and artist and array index not null.
+                    if((pClone[i] != null) &&pClone[i].getArtist().equalsIgnoreCase(artist)){
+                        System.out.println(pClone[i]);
+                    }
+                }
+            }
+        }
+        else{
+            System.out.println("Playlist is empty");
+        }
+    }
+
+    public void playTrack(int year, boolean random){ 
+        Track[] pClone = playlist.clone();
+        int used = usedIndexCount(); //clone array so as not to alter the original playlist
+        int yCount=0;//counts the number of occorunces ot int year in the array
+ 
+        for(int i = 0; i < pClone.length; i++) {
+            if((pClone[i] != null) &&pClone[i].getYear() == (year)){
+                yCount++;//if count == 0 we know that no tracks match int year.
+            }
+        }
+
+        if(used>0){
+            if(yCount ==0){
+                System.out.println("No tracks match your chosen year");
+            }
+            else{
+                if(random == true){//shuffles array
+                    for(int i=0; i<pClone.length;i++){
+                        int song = (int) (Math.random() * used);
+                        Track temp = pClone[song];
+                        pClone[song] = pClone[i];
+                        pClone[i] = temp;
+                    }     
+                }
+                for(int i = 0; i < pClone.length; i++) {//print final aray, that meets criteria of specified boolean and artist and array index not null.
+                    if((pClone[i] != null) && pClone[i].getYear() == (year)){
+                        System.out.println(pClone[i]);
+                    }
+                }
+            }
+        }
+        else{
+            System.out.println("Playlist is empty");
+        }
+    }
+}
+
+
