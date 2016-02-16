@@ -1,0 +1,101 @@
+//Track class
+public class Track
+{
+    private String song;
+    private String artist;
+    private int year;
+    private int duration;
+    private int hour;//hour, min and sec are used to divide int duration into smaller units of time.
+    private int min;
+    private int sec;
+
+    public Track(String song){
+        this.song = song;
+        this.artist = "";
+        this.year = 0;
+        this.duration = 0;
+    }
+
+    public Track(String song,String artist){
+        this.song = song;
+        this.artist = artist;
+        this.year = 0;
+        this.duration = 0;
+    }
+
+    public Track(String song,String artist,int year){
+        this.song = song;
+        this.artist = artist;
+        this.year = year;
+        this.duration = 0;
+    }
+
+    public Track(String song,String artist,int year,int duration){
+        this.song = song;
+        this.artist = artist;
+        this.year = year;
+        this.duration = duration;
+        
+        //divides int duration into smaller units of hour, min, and sec, depending on the size of int duration.
+        this.sec = duration%60;
+        this.min = duration/60;
+        if(this.min>=60){
+            this.hour = min/(60*60);
+            this.min = min%60;
+
+        }
+    }
+
+    public int compareTo(Track other){//if this returns a result other than 0, we know that the Tracks are not the same.
+        int result = this.song.compareToIgnoreCase(other.song);
+        if(result != 0){
+            return result;
+        }
+        return this.artist.compareToIgnoreCase(other.artist);
+    }
+
+    public String getSong(){
+        return song;
+    }
+
+    public void setSong(String song){
+        this.song = new String(song);
+    }
+
+    public String getArtist(){
+        return artist;
+    }
+
+    public void setArtist(String artist){
+        this.artist = new String(artist);
+    }
+
+    public int getYear(){
+        return year;
+    }
+
+    public void setYear(int year){
+        this.year = year;
+    }
+
+    public int getDuration(){
+        return duration;
+    }
+
+    public void setDuration(int duration){
+        this.duration = duration;
+        this.sec = this.duration%60;
+        this.min = this.duration/60;
+        if(this.min>=60){
+            this.hour = min/(60*60);
+            this.min = min%60;
+
+        }
+    }
+    //return track details, with duration edited to show time in hours,minutes, and seconds.
+    public String toString() {
+        return "Song: " + this.song + " | Artist: " + this.artist + " | Release Year: " + this.year + " | Duration: " + this.hour + ":" + this.min  + ":" + this.sec;
+    }
+
+}
+
