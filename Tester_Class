@@ -1,0 +1,73 @@
+//'Driver' class to test project
+public class musicDriver
+{
+    public static void main(String[] args){
+        PlayList driverPlaylist = new PlayList(7);
+
+        Track[] driverTracks = new Track[9];
+
+        driverTracks[0] = new Track("Red Hill Mining Town","U2",1987,294);
+        driverTracks[1] = new Track("Thursday Afternoon", "Brian Eno", 1985, 216054);
+        driverTracks[2] = new Track("Thursday Afternoon", "Brian Eno", 1985, 216054);
+        driverTracks[3] = new Track("Where the Streets Have No Name","U2",1987,338);
+        driverTracks[4] = new Track("I Still Haven't Found What I'm Looking For","U2",1987,278);
+        driverTracks[5] = new Track("Running to Stand Still","U2",1987,258);
+        driverTracks[6] = new Track("One Tree Hill","Oasis",1999,323);
+        driverTracks[7] = new Track("Exit","Oasis",1999,253);
+        driverTracks[8] = new Track("Red Hill Mining","U2",1987,294);
+        
+        
+        System.out.printf("Oisin Bates Driver Programme\n\n");
+        System.out.printf("\n\nShowlist(),playAll(),playTrack()- testing on an empty playlist:\n\n");
+        driverPlaylist.showList();
+        driverPlaylist.playAll(true);
+        driverPlaylist.playTrack("Oasis", true);
+        
+        System.out.printf("\n\nAdd track, remove, test setters, add again to confirm change:\n\n");
+        driverPlaylist.add(driverTracks[0]);
+        driverPlaylist.showList();
+        driverPlaylist.remove(driverTracks[0]);
+        driverTracks[0].setSong("new song title");
+        driverTracks[0].setArtist("Oasis");
+        driverTracks[0].setYear(1999);
+        driverTracks[0].setDuration(2000);
+        driverPlaylist.add(driverTracks[0]);
+        driverPlaylist.showList();
+        
+        System.out.printf("\n\nAdd other driver tracks(showing also that duplicates are not allowed):\n\n");
+        for (int i = 0; i < driverTracks.length-1; i++){//adding all driverTracks with the exceptions of driverTracks[8], and driverTracks[0] which has already been added.
+            if(driverTracks[i]!= null){
+                driverPlaylist.add(driverTracks[i]);
+            }
+        }
+        System.out.printf("\n\nAttempt to add track to playlist with no space free:\n\n");
+        driverPlaylist.add(driverTracks[8]);
+        
+        System.out.printf("\n\nRemove a track which is in the playlist:\n\n");
+        driverPlaylist.remove(driverTracks[3]);  
+         System.out.printf("\n\n Attempt to remove a track which isn't the playlist:\n\n");
+        driverPlaylist.remove(driverTracks[8]);
+        
+        System.out.printf("\n\nshowList():\n\n");
+        driverPlaylist.showList();
+        System.out.printf("\n\nplayAll- boolean true:\n\n");
+        driverPlaylist.playAll(true);
+        System.out.printf("\n\nplayAll- boolean false:\n\n");
+        driverPlaylist.playAll(false);
+        
+        System.out.printf("\n\nplayTrack, artist = Oasis, random = true:\n\n");
+        driverPlaylist.playTrack("Oasis", true);
+          System.out.printf("\n\nplayTrack, artist = Oasis, random = false:\n\n");
+        driverPlaylist.playTrack("Oasis", false);
+        System.out.printf("\n\nplayTrack, artist not in playlist:\n\n");
+        driverPlaylist.playTrack("oasi", true);
+        System.out.printf("\n\nplayTrack, year =1987, random = true:\n\n");
+        driverPlaylist.playTrack(1987, true);
+          System.out.printf("\n\nplayTrack, year =1987, random = false:\n\n");
+        driverPlaylist.playTrack(1987, false);
+        System.out.printf("\n\nplayTrack, year not in playlist:\n\n");
+        driverPlaylist.playTrack(1982, true);
+        
+    }
+}
+
